@@ -1,4 +1,4 @@
-import { Entity,BaseEntity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable } from "typeorm";
+import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable } from "typeorm";
 import { GiaoVien } from "./giaoVien";
 import { HocSinh } from "./hocSinh";
 
@@ -7,32 +7,14 @@ import { HocSinh } from "./hocSinh";
 export class MonHoc extends BaseEntity {
 
     @PrimaryGeneratedColumn()
-    id_monhoc: number;
+    id: number;
 
-    @Column()
-    ten_monhoc: string;
+    @Column({ type: 'varchar', length: 255 })
+    ten: string;
 
-    @OneToMany(
-        () => GiaoVien,
-        giaovien => giaovien.monhoc
-    )
-    giaoviens: GiaoVien[]
-    
-
-    @ManyToMany(
-        () => HocSinh
-    )
-    @JoinTable({
-        name:"monhocs_hocsinhs",
-        joinColumn: {
-            name: "monhoc",
-            referencedColumnName: 'id_monhoc'
-        },
-        inverseJoinColumn: {
-            name: "hocsinh",
-            referencedColumnName: 'id'
-        }
-    })
+    @ManyToMany(() => HocSinh)
     hocsinh: HocSinh[]
 
+    @OneToMany(() => GiaoVien, (nhieu_giaovien) => nhieu_giaovien.monhoc)
+    nhieu_giaovien: GiaoVien;
 }

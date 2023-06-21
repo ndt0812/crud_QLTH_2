@@ -1,33 +1,23 @@
-import { Entity,Column, ManyToOne, JoinColumn, OneToMany } from "typeorm";
-import { Person } from "./utils/person";
+import { Entity, Column, ManyToOne, JoinColumn, OneToMany, PrimaryGeneratedColumn, BaseEntity } from "typeorm";
 import { MonHoc } from "./monHoc";
 import { BaiKiemTra } from "./baiKiemTra";
 
 @Entity('GiaoVien')
-export class GiaoVien extends Person {
-    @Column({
-        type: "numeric"
-    })
+export class GiaoVien extends BaseEntity {
+
+    @PrimaryGeneratedColumn()
+    id: number;
+
+    @Column({ type: 'varchar', length: 255 })
+    ten: string;
+
+    @Column({ type: "numeric" })
     so_nam_kinh_nghiem: number;
 
-    @Column({
-        unique: true
-    })
-    mon_day: string;
+    @OneToMany(() => BaiKiemTra, (nhieu_baiktra) => nhieu_baiktra.giaovien)
+    nhieu_baiktra: BaiKiemTra[]
 
-    @ManyToOne(
-        () => MonHoc,
-        monhoc => monhoc.giaoviens
-    )
-
-    @JoinColumn({
-        name: 'monhoc_id'
-    })
-    monhoc: MonHoc
-
-    @OneToMany(
-        () => BaiKiemTra,
-        baikiemtra => baikiemtra.giaoviens
-    )
-    baikiemtra: BaiKiemTra[]
+    @ManyToOne(() => MonHoc, (monhoc) => monhoc.nhieu_giaovien)
+    @JoinColumn({ name: 'monhoc_id' })
+    monhoc: MonHoc;
 }

@@ -1,9 +1,9 @@
-import { BaseConnectionOptions } from "../../connection/BaseConnectionOptions";
+import { BaseDataSourceOptions } from "../../data-source/BaseDataSourceOptions";
 import { OracleConnectionCredentialsOptions } from "./OracleConnectionCredentialsOptions";
 /**
  * Oracle-specific connection options.
  */
-export interface OracleConnectionOptions extends BaseConnectionOptions, OracleConnectionCredentialsOptions {
+export interface OracleConnectionOptions extends BaseDataSourceOptions, OracleConnectionCredentialsOptions {
     /**
      * Database type.
      */
@@ -13,8 +13,13 @@ export interface OracleConnectionOptions extends BaseConnectionOptions, OracleCo
      */
     readonly schema?: string;
     /**
-    * A boolean determining whether to pass time values in UTC or local time. (default: true).
-    */
+     * The driver object
+     * This defaults to require("oracledb")
+     */
+    readonly driver?: any;
+    /**
+     * A boolean determining whether to pass time values in UTC or local time. (default: false).
+     */
     readonly useUTC?: boolean;
     /**
      * Replication setup.

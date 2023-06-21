@@ -4,8 +4,8 @@ exports.BroadcasterResult = void 0;
 /**
  * Broadcaster execution result - promises executed by operations and number of executed listeners and subscribers.
  */
-var BroadcasterResult = /** @class */ (function () {
-    function BroadcasterResult() {
+class BroadcasterResult {
+    constructor() {
         /**
          * Number of executed listeners and subscribers.
          */
@@ -15,8 +15,16 @@ var BroadcasterResult = /** @class */ (function () {
          */
         this.promises = [];
     }
-    return BroadcasterResult;
-}());
+    /**
+     * Wait for all promises to settle
+     */
+    async wait() {
+        if (this.promises.length > 0) {
+            await Promise.all(this.promises);
+        }
+        return this;
+    }
+}
 exports.BroadcasterResult = BroadcasterResult;
 
 //# sourceMappingURL=BroadcasterResult.js.map

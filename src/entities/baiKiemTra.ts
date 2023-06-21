@@ -1,40 +1,23 @@
-import { Entity,BaseEntity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn, OneToMany } from "typeorm";
 import { HocSinh } from "./hocSinh";
 import { GiaoVien } from "./giaoVien";
-
+import { Diem } from "./diem_ktra";
 
 @Entity('BaiKiemTra')
 export class BaiKiemTra extends BaseEntity {
+    @PrimaryGeneratedColumn("increment")
+    id: number;
 
-    @PrimaryGeneratedColumn()
-    id_baiktra: number;
+    @Column({ type: 'varchar', length: 255 })
+    ten: string;
 
-    @Column()
-    ten_baikrta: string;
+    @ManyToOne(() => GiaoVien, (giaovien) => giaovien.nhieu_baiktra)
+    @JoinColumn({ name: "giaovien_id" })
+    giaovien: GiaoVien;
 
-    @ManyToMany(
-        () => HocSinh
-    )
-    @JoinTable({
-        name: 'nhieubaikiemtra_nhieuhocsinh',
-        joinColumn: {
-            name: 'baikiemtra',
-            referencedColumnName: 'id_baiktra'
-        },
-        inverseJoinColumn: {
-            name: 'hocsinh',
-            referencedColumnName: 'id'
-        }
-    })
-    hocsinh: HocSinh[]
+    @OneToMany(() => Diem, (nhieu_diem) => nhieu_diem.baiktra)
+    nhieu_diem: Diem[];
 
-    @ManyToOne(
-        () => GiaoVien,
-        giaovien => giaovien.baikiemtra
-    )
-
-    @JoinColumn({
-        name: 'giaovien_id'
-    })
-    giaoviens: GiaoVien
+    @ManyToMany(() => HocSinh)
+    hocsinh: HocSinh[];
 }
