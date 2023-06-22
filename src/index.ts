@@ -19,6 +19,7 @@ import { xoaBaiKiemTra } from './route/baikiemtra_route/xoa_baikiemtra';
 import { Diem } from './entities/diem_ktra';
 import { nhapDiem } from './route/diem_ktra';
 import { layDanhSachHocSinh } from './route/lay_hocsinh_bktra';
+import { layGiaoVien } from './route/lay_giaovien';
 
 const app = express();
 
@@ -56,16 +57,19 @@ const main = async () => {
         app.use(xoaBaiKiemTra)
         //diem
         app.use(nhapDiem)
+        //laydanhsach
         app.use(layDanhSachHocSinh)
-
+        app.use(layGiaoVien)
 
         app.listen(3000, () => {
             console.log("chay tren port 3000")
         })
+
     } catch (error) {
         console.error(error)
         throw new Error("ko the ket noi toi postgres")
     }
 }
+
 
 main()

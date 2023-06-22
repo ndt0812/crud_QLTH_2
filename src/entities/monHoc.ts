@@ -12,7 +12,7 @@ export class MonHoc extends BaseEntity {
     @Column({ type: 'varchar', length: 255 })
     ten: string;
 
-    @ManyToMany(() => HocSinh)
+    @ManyToMany(() => HocSinh, { cascade: true })
     hocsinh: HocSinh[]
 
     @OneToMany(() => GiaoVien, (nhieu_giaovien) => nhieu_giaovien.monhoc)

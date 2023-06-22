@@ -1,7 +1,8 @@
 import express from "express";
 import { BaiKiemTra } from "../entities/baiKiemTra";
 import { Diem } from "../entities/diem_ktra";
-import { Equal, createQueryBuilder } from 'typeorm'
+import { Equal, createQueryBuilder, getRepository } from 'typeorm'
+import { GiaoVien } from "../entities/giaoVien";
 
 const router = express.Router();
 
@@ -16,19 +17,20 @@ router.get('/QLTH/layhocsinh/:bktraId', async (req, res) => {
             }
         })
 
+
         if (bktraId != null) {
-            // var id = Number(bktraId)
-            // var a = await Diem.find({
-            //     where: {
-            //         baiktra: {
-            //             id: Equal(id)
-            //         }
-            //     },
-            //     relations:
-            //     {
-            //         baiktra: true
-            //     }
-            // })
+            //     // var id = Number(bktraId)
+            //     // var a = await Diem.find({
+            //     //     where: {
+            //     //         baiktra: {
+            //     //             id: Equal(id)
+            //     //         }
+            //     //     },
+            //     //     relations:
+            //     //     {
+            //     //         baiktra: true
+            //     //     }
+            //     // })
 
             const lay_baiktra_id = await createQueryBuilder(Diem, 'd')
                 .select('d.hocsinh')

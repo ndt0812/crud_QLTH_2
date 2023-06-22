@@ -11,13 +11,13 @@ export class BaiKiemTra extends BaseEntity {
     @Column({ type: 'varchar', length: 255 })
     ten: string;
 
-    @ManyToOne(() => GiaoVien, (giaovien) => giaovien.nhieu_baiktra)
+    @ManyToOne(() => GiaoVien, (giaovien) => giaovien.nhieu_baiktra, { onDelete: "CASCADE" })
     @JoinColumn({ name: "giaovien_id" })
     giaovien: GiaoVien;
 
     @OneToMany(() => Diem, (nhieu_diem) => nhieu_diem.baiktra)
     nhieu_diem: Diem[];
 
-    @ManyToMany(() => HocSinh)
+    @ManyToMany(() => HocSinh, { cascade: true })
     hocsinh: HocSinh[];
 }
