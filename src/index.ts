@@ -20,6 +20,10 @@ import { Diem } from './entities/diem_ktra';
 import { nhapDiem } from './route/diem_ktra';
 import { layDanhSachHocSinh } from './route/lay_hocsinh_bktra';
 import { layGiaoVien } from './route/lay_giaovien';
+import { exportHocSinhExcel } from './route/excel/hocsinh_excel';
+import { exportGiaoVienExcel } from './route/excel/giaovien_excel';
+import { exportBaiKiemTraExcel } from './route/excel/baiktra_excel';
+import { exportMonHocExcel } from './route/excel/monhoc_excel';
 
 const app = express();
 
@@ -60,6 +64,11 @@ const main = async () => {
         //laydanhsach
         app.use(layDanhSachHocSinh)
         app.use(layGiaoVien)
+        //exportExcel
+        app.use(exportHocSinhExcel)
+        app.use(exportGiaoVienExcel)
+        app.use(exportBaiKiemTraExcel)
+        app.use(exportMonHocExcel)
 
         app.listen(3000, () => {
             console.log("chay tren port 3000")
