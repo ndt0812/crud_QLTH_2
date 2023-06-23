@@ -3,7 +3,6 @@ import Excel from "exceljs";
 import { createQueryBuilder } from "typeorm";
 import path from "path";
 import { GiaoVien } from "../../entities/giaoVien";
-import { MonHoc } from "../../entities/monHoc";
 
 
 const router = express.Router();

@@ -2,11 +2,12 @@ import express from 'express';
 import { Diem } from '../entities/diem_ktra';
 import { HocSinh } from '../entities/hocSinh';
 import { BaiKiemTra } from '../entities/baiKiemTra';
+const { role } = require('../middleware/role');
 
 
 const router = express.Router();
 
-router.put("/QLTH/bktra/:bktraId/hocsinh/:hocsinhId", async (req, res) => {
+router.put("/QLTH/bktra/:bktraId/hocsinh/:hocsinhId", role(['ADM']), async (req, res) => {
     try {
         const { diem, baiktra_id, hocsinh_id } = req.body;
 

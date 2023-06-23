@@ -1,14 +1,15 @@
 import express from "express";
 import { MonHoc } from "../../entities/monHoc";
+const { role } = require('../../middleware/role');
 
 const router = express.Router();
 
-router.delete("/QLTH/monhoc/:monhocId", async (req,res) => {
+router.delete("/QLTH/monhoc/:monhocId", role(['ADM']), async (req, res) => {
     try {
         const { monhocId } = req.params;
 
         await MonHoc.delete(parseInt(monhocId))
-    
+
         return res.json({
             status: 'oke',
             msg: 'xoa mon hoc thanh cong'
@@ -21,4 +22,4 @@ router.delete("/QLTH/monhoc/:monhocId", async (req,res) => {
     }
 })
 
-export { router as xoaMonHoc}
+export { router as xoaMonHoc }

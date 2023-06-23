@@ -1,9 +1,10 @@
 import express from "express";
+const { role } = require('../../middleware/role');
 import { MonHoc } from "../../entities/monHoc";
 
 const router = express.Router();
 
-router.put("/QLTH/monhoc/:monhocId", async (req, res) => {
+router.put("/QLTH/monhoc/:monhocId", role(['ADM']), async (req, res) => {
     try {
         const { monhocId } = req.params;
         const monhoc = req.body;

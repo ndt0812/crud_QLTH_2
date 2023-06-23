@@ -1,12 +1,13 @@
 import express from "express";
 import { BaiKiemTra } from "../entities/baiKiemTra";
 import { GiaoVien } from "../entities/giaoVien";
-import { createQueryBuilder, getRepository } from "typeorm";
+import { createQueryBuilder } from "typeorm";
+const { role } = require('../middleware/role');
 
 
 const router = express.Router();
 
-router.get('/QLTH/laygiaovien', async (req, res) => {
+router.get('/QLTH/laygiaovien', role(['ADM']), async (req, res) => {
     try {
         const id = await createQueryBuilder(GiaoVien, "gv")
             .select("gv.id")

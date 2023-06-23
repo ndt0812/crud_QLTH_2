@@ -4,7 +4,6 @@ import { createQueryBuilder } from "typeorm";
 import { HocSinh } from "../../entities/hocSinh";
 import path from "path";
 
-
 const router = express.Router();
 
 router.get('/QLTH/hocsinh/export', async (req, res) => {

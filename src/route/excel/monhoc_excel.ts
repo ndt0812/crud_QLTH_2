@@ -4,7 +4,6 @@ import { createQueryBuilder } from "typeorm";
 import path from "path";
 import { MonHoc } from "../../entities/monHoc";
 
-
 const router = express.Router();
 
 router.get('/QLTH/monhoc/export', async (req, res) => {

@@ -1,12 +1,12 @@
 import express from "express";
 import { BaiKiemTra } from "../entities/baiKiemTra";
 import { Diem } from "../entities/diem_ktra";
-import { Equal, createQueryBuilder, getRepository } from 'typeorm'
-import { GiaoVien } from "../entities/giaoVien";
+import { createQueryBuilder } from 'typeorm'
+const { role } = require('../middleware/role');
 
 const router = express.Router();
 
-router.get('/QLTH/layhocsinh/:bktraId', async (req, res) => {
+router.get('/QLTH/layhocsinh/:bktraId', role(['ADM']), async (req, res) => {
     try {
 
         const { bktraId } = req.params;

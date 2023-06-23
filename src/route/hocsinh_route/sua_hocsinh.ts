@@ -1,9 +1,10 @@
 import express from "express";
 import { HocSinh } from "../../entities/hocSinh";
+const { role } = require('../../middleware/role');
 
 const router = express.Router();
 
-router.put("/QLTH/hocsinh/:hocsinhId", async (req, res) => {
+router.put("/QLTH/hocsinh/:hocsinhId", role(['ADM']), async (req, res) => {
     try {
         const { hocsinhId } = req.params;
         const hocsinh = req.body;

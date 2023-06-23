@@ -13,7 +13,7 @@ export class HocSinh extends BaseEntity {
     @Column({ type: 'varchar', length: 255 })
     ten: string;
 
-    @CreateDateColumn({ nullable: true, default: () => "timezone('utc'::text,now())", })
+    @CreateDateColumn({ nullable: true, default: () => "timezone('en-Us + T07:00'::text,now())", })
     ngay_sinh: Date;
 
     @ManyToMany(() => MonHoc)
