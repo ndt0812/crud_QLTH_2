@@ -1,0 +1,19 @@
+token = header.payload.signnature
+
+data + secret (sign function) -> token
+token + secret (verify function) => data
+
+sign callback async, set expriedIn
+
+
+//trang dang ky : username and password 
+
+
+2.
+//moi lan login la phia client gui ve cho server 1 token 
+(*token do se duoc set expried )
+//server tu token do su dung password secret de verify ra data 
+//phia server se so sanh data tu token do gui ve voi lai thong tin
+ma phia client gui len thong qua login
+//neu giong: pass
+//neu khac: tai khoan hoac mat khau khong dung

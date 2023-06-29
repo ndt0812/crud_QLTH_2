@@ -24,6 +24,10 @@ import { exportHocSinhExcel } from './route/excel/hocsinh_excel';
 import { exportGiaoVienExcel } from './route/excel/giaovien_excel';
 import { exportBaiKiemTraExcel } from './route/excel/baiktra_excel';
 import { exportMonHocExcel } from './route/excel/monhoc_excel';
+import { TaiKhoan } from './entities/taiKhoan';
+import { taiKhoan } from './route/TaiKhoan_route/taikhoan_route';
+import { dangNhap } from './route/TaiKhoan_route/dangnhap';
+import { trangThongTin } from './route/TaiKhoan_route/trangThongTin_route';
 
 const app = express();
 
@@ -37,7 +41,7 @@ const main = async () => {
             password: "tDmgxqFRUm92Q4URItpHdbJKPw4ex4DIdBLL4HQThvfhzUUJZ6",
             schema: "thang_db",
             database: "sample_db",
-            entities: [HocSinh, GiaoVien, MonHoc, BaiKiemTra, Diem],
+            entities: [HocSinh, GiaoVien, MonHoc, BaiKiemTra, Diem, TaiKhoan],
             synchronize: true
         })
         console.log("ket noi toi Postgres thanh cogn")
@@ -69,6 +73,10 @@ const main = async () => {
         app.use(exportGiaoVienExcel)
         app.use(exportBaiKiemTraExcel)
         app.use(exportMonHocExcel)
+        //taikhoan
+        app.use(taiKhoan)
+        app.use(dangNhap)
+        app.use(trangThongTin)
 
         app.listen(3000, () => {
             console.log("chay tren port 3000")
