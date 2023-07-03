@@ -1,10 +1,7 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import { HocSinh } from '../../entities/hocSinh';
-const { role } = require('../../middleware/role');
 
-const router = express.Router();
-
-router.post("/QLTH/hocsinh", role(['ADM']), async (req, res) => {
+export const themHocSinh = async (req: Request, res: Response) => {
     try {
         const {
             ten,
@@ -28,8 +25,4 @@ router.post("/QLTH/hocsinh", role(['ADM']), async (req, res) => {
             msg: error.message
         })
     }
-});
-
-export {
-    router as themHocSinh
-}
+};

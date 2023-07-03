@@ -1,24 +1,23 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import { Diem } from '../entities/diem_ktra';
 import { HocSinh } from '../entities/hocSinh';
 import { BaiKiemTra } from '../entities/baiKiemTra';
-const { role } = require('../middleware/role');
+import { dataSource } from '../data-source';
 
-
-const router = express.Router();
-
-router.put("/QLTH/bktra/:bktraId/hocsinh/:hocsinhId", role(['ADM']), async (req, res) => {
+export const nhapDiem = async (req: Request, res: Response) => {
     try {
         const { diem, baiktra_id, hocsinh_id } = req.body;
 
         const { bktraId, hocsinhId } = req.params;
-
-        const hocsinh = await HocSinh.findOne({
-            where: { id: parseInt(bktraId) }
+        var repo = dataSource.getRepository(HocSinh);
+        const hocsinh = await repo.findOne({
+            where: {
+                id: parseInt(hocsinhId)
+            }
         })
 
         const bktra = await BaiKiemTra.findOne({
-            where: { id: parseInt(hocsinhId) }
+            where: { id: parseInt(bktraId) }
         })
 
         if (!hocsinh || !bktra) {
@@ -50,8 +49,4 @@ router.put("/QLTH/bktra/:bktraId/hocsinh/:hocsinhId", role(['ADM']), async (req,
             msg: "nhap diem that bai"
         })
     }
-});
-
-export {
-    router as nhapDiem
 }

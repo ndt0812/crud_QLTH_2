@@ -1,10 +1,10 @@
-import express from 'express';
+import express from "express";
 import { TaiKhoan } from '../../entities/taiKhoan';
 let jwt = require("jsonwebtoken");
 
 const router = express.Router();
 
-router.get("/QLTH/login", async (req, res) => {
+router.get("/QLTH/login", async (req, res, next) => {
     try {
         let tenDangNhap = req.body.tenDangNhap;
         let matKhau = req.body.matKhau;
@@ -17,15 +17,14 @@ router.get("/QLTH/login", async (req, res) => {
         })
 
         if (taikhoan) {
-            let token = jwt.sign({
-                id: taikhoan.id
-            }, 'bimat')
+            let token = jwt.sign({ id: taikhoan.id }, 'bimat');
+
+            res.cookie('token', token)
+
             return res.json({
-                status: 'oke, dang nhap thanh cong',
                 token: token
             });
         }
-
 
     } catch (error) {
         return res.json({
@@ -33,7 +32,7 @@ router.get("/QLTH/login", async (req, res) => {
             msg: "that bai"
         })
     }
-});
+},);
 
 export {
     router as dangNhap

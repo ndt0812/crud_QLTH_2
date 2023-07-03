@@ -1,10 +1,7 @@
-import express from "express";
+import express, { Request, Response } from 'express';
 import { GiaoVien } from "../../entities/giaoVien";
-const { role } = require('../../middleware/role');
 
-const router = express.Router();
-
-router.delete("/QLTH/giaovien/:giaovienId", role(['ADM']), async (req, res) => {
+export const xoaGiaoVien = async (req: Request, res: Response) => {
     try {
         const { giaovienId } = req.params;
 
@@ -20,6 +17,4 @@ router.delete("/QLTH/giaovien/:giaovienId", role(['ADM']), async (req, res) => {
             msg: 'xoa giao vien that bai '
         })
     }
-})
-
-export { router as xoaGiaoVien }
+}

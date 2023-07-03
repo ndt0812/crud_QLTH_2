@@ -7,7 +7,7 @@ const { role } = require('../middleware/role');
 
 const router = express.Router();
 
-router.get('/QLTH/laygiaovien', role(['ADM']), async (req, res) => {
+router.get('/QLTH/laygiaovien', async (req, res) => {
     try {
         const id = await createQueryBuilder(GiaoVien, "gv")
             .select("gv.id")

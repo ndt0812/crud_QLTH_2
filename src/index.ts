@@ -4,20 +4,7 @@ import { HocSinh } from './entities/hocSinh';
 import { GiaoVien } from './entities/giaoVien';
 import { MonHoc } from './entities/monHoc';
 import { BaiKiemTra } from './entities/baiKiemTra';
-import { themHocSinh } from './route/hocsinh_route/them_hocsinh';
-import { xoaHocSinh } from './route/hocsinh_route/xoa_hocsinh';
-import { suaHocSinh } from './route/hocsinh_route/sua_hocsinh';
-import { themGiaoVien } from './route/giaovien_route/them_giaovien';
-import { suaGiaoVien } from './route/giaovien_route/sua_giaovien';
-import { xoaGiaoVien } from './route/giaovien_route/xoa_giaovien';
-import { themMonHoc } from './route/monhoc_route/them_monhoc';
-import { suaMonHoc } from './route/monhoc_route/sua_monhoc';
-import { xoaMonHoc } from './route/monhoc_route/xoa_monhoc';
-import { suaBaiKiemTra } from './route/baikiemtra_route/sua_baikiemtra';
-import { themBaiKiemTra } from './route/baikiemtra_route/them_baikiemtra';
-import { xoaBaiKiemTra } from './route/baikiemtra_route/xoa_baikiemtra';
 import { Diem } from './entities/diem_ktra';
-import { nhapDiem } from './route/diem_ktra';
 import { layDanhSachHocSinh } from './route/lay_hocsinh_bktra';
 import { layGiaoVien } from './route/lay_giaovien';
 import { exportHocSinhExcel } from './route/excel/hocsinh_excel';
@@ -28,43 +15,31 @@ import { TaiKhoan } from './entities/taiKhoan';
 import { taiKhoan } from './route/TaiKhoan_route/taikhoan_route';
 import { dangNhap } from './route/TaiKhoan_route/dangnhap';
 import { trangThongTin } from './route/TaiKhoan_route/trangThongTin_route';
+import hsControllerRouter from './route/controller/hsController.router';
+import gvControllerRouter from './route/controller/gvController.router';
+import mhControllerRouter from './route/controller/mhController.router';
+import bktControllerRouter from './route/controller/bktController.router';
+import diemControllerRouter from './route/controller/diemController.router';
+import { dataSource } from './data-source';
 
 const app = express();
 
 const main = async () => {
     try {
-        await createConnection({
-            type: "postgres",
-            host: "db-devtest-pg.metatech.xyz",
-            port: 5432,
-            username: "sample",
-            password: "tDmgxqFRUm92Q4URItpHdbJKPw4ex4DIdBLL4HQThvfhzUUJZ6",
-            schema: "thang_db",
-            database: "sample_db",
-            entities: [HocSinh, GiaoVien, MonHoc, BaiKiemTra, Diem, TaiKhoan],
-            synchronize: true
-        })
+        await dataSource.initialize();
         console.log("ket noi toi Postgres thanh cogn")
 
         app.use(express.json())
         //hoc sinh
-        app.use(themHocSinh)
-        app.use(xoaHocSinh)
-        app.use(suaHocSinh)
+        app.use('/QLTH', hsControllerRouter)
         //giao vien
-        app.use(themGiaoVien)
-        app.use(suaGiaoVien)
-        app.use(xoaGiaoVien)
+        app.use('/QLTH', gvControllerRouter)
         //mon hoc
-        app.use(themMonHoc)
-        app.use(suaMonHoc)
-        app.use(xoaMonHoc)
+        app.use('/QLTH', mhControllerRouter)
         //baikiemtra
-        app.use(suaBaiKiemTra)
-        app.use(themBaiKiemTra)
-        app.use(xoaBaiKiemTra)
+        app.use('/QLTH', bktControllerRouter)
         //diem
-        app.use(nhapDiem)
+        app.use('/QLTH', diemControllerRouter)
         //laydanhsach
         app.use(layDanhSachHocSinh)
         app.use(layGiaoVien)

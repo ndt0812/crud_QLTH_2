@@ -6,7 +6,7 @@ const { role } = require('../middleware/role');
 
 const router = express.Router();
 
-router.get('/QLTH/layhocsinh/:bktraId', role(['ADM']), async (req, res) => {
+router.get('/QLTH/layhocsinh/:bktraId', async (req, res) => {
     try {
 
         const { bktraId } = req.params;

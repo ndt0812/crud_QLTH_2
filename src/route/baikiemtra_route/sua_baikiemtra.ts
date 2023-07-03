@@ -1,10 +1,7 @@
-import express from "express";
+import express, { Request, Response } from 'express';
 import { BaiKiemTra } from "../../entities/baiKiemTra";
-const { role } = require('../../middleware/role');
 
-const router = express.Router();
-
-router.put("/QLTH/baikiemtra/:baikiemtraId", role(['ADM']), async (req, res) => {
+export const suaBaiKiemTra = async (req: Request, res: Response) => {
     try {
         const { baikiemtraId } = req.params;
         const baikiemtra = req.body;
@@ -29,6 +26,4 @@ router.put("/QLTH/baikiemtra/:baikiemtraId", role(['ADM']), async (req, res) => 
             msg: 'sua bai kiem tra that bai '
         })
     }
-})
-
-export { router as suaBaiKiemTra }
+}
