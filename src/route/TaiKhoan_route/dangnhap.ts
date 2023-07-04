@@ -1,15 +1,15 @@
-import express from "express";
+import { Request, Response, NextFunction } from 'express';
 import { TaiKhoan } from '../../entities/taiKhoan';
+import { dataSource } from '../../data-source';
 let jwt = require("jsonwebtoken");
 
-const router = express.Router();
-
-router.get("/QLTH/login", async (req, res, next) => {
+export const dangNhap = async (req: Request, res: Response, next: NextFunction) => {
     try {
         let tenDangNhap = req.body.tenDangNhap;
         let matKhau = req.body.matKhau;
+        let repo = dataSource.getRepository(TaiKhoan)
 
-        const taikhoan = await TaiKhoan.findOne({
+        const taikhoan = await repo.findOne({
             where: {
                 tenDangNhap: tenDangNhap,
                 matKhau: matKhau
@@ -22,6 +22,7 @@ router.get("/QLTH/login", async (req, res, next) => {
             res.cookie('token', token)
 
             return res.json({
+                status: "dang nhap thanh cong, xin chao ban ",
                 token: token
             });
         }
@@ -32,8 +33,4 @@ router.get("/QLTH/login", async (req, res, next) => {
             msg: "that bai"
         })
     }
-},);
-
-export {
-    router as dangNhap
-}
+};

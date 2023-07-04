@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { HocSinh } from '../../entities/hocSinh';
 
 export const themHocSinh = async (req: Request, res: Response) => {

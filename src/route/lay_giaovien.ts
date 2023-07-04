@@ -1,15 +1,13 @@
-import express from "express";
+import express, { Request, Response } from 'express';
 import { BaiKiemTra } from "../entities/baiKiemTra";
 import { GiaoVien } from "../entities/giaoVien";
-import { createQueryBuilder } from "typeorm";
-const { role } = require('../middleware/role');
+import { dataSource } from '../data-source';
 
 
-const router = express.Router();
-
-router.get('/QLTH/laygiaovien', async (req, res) => {
+export const layGiaoVien = async (req: Request, res: Response) => {
     try {
-        const id = await createQueryBuilder(GiaoVien, "gv")
+        let repo = dataSource.getRepository(GiaoVien)
+        const id = await repo.createQueryBuilder("gv")
             .select("gv.id")
             .addSelect("gv.ten")
             //.addSelect("bkt.ten")
@@ -27,6 +25,4 @@ router.get('/QLTH/laygiaovien', async (req, res) => {
             msg: error.message
         })
     }
-})
-
-export { router as layGiaoVien }
+}

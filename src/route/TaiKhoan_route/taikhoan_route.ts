@@ -1,17 +1,17 @@
-import express from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { TaiKhoan } from '../../entities/taiKhoan';
+import { dataSource } from '../../data-source';
 
-const router = express.Router();
-
-router.post("/QLTH/taikhoan", async (req, res) => {
+export const taiKhoan = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const {
             tenDangNhap,
             matKhau,
             role
         } = req.body;
+        let repo = dataSource.getRepository(TaiKhoan)
 
-        const taikhoan = TaiKhoan.create({
+        const taikhoan = repo.create({
             tenDangNhap: tenDangNhap,
             matKhau: matKhau,
             role: role
@@ -29,8 +29,4 @@ router.post("/QLTH/taikhoan", async (req, res) => {
             msg: "that bai"
         })
     }
-});
-
-export {
-    router as taiKhoan
 }

@@ -1,22 +1,20 @@
-import express from "express";
+import express, { Request, Response } from 'express';
 import { BaiKiemTra } from "../entities/baiKiemTra";
 import { Diem } from "../entities/diem_ktra";
-import { createQueryBuilder } from 'typeorm'
-const { role } = require('../middleware/role');
+import { dataSource } from '../data-source';
 
-const router = express.Router();
-
-router.get('/QLTH/layhocsinh/:bktraId', async (req, res) => {
+export const layDanhSachHocSinh = async (req: Request, res: Response) => {
     try {
 
         const { bktraId } = req.params;
 
-        await BaiKiemTra.findOne({
+        let repo = dataSource.getRepository(BaiKiemTra)
+        let repr2 = dataSource.getRepository(Diem)
+        await repo.findOne({
             where: {
                 id: parseInt(bktraId)
             }
         })
-
 
         if (bktraId != null) {
             //     // var id = Number(bktraId)
@@ -32,7 +30,7 @@ router.get('/QLTH/layhocsinh/:bktraId', async (req, res) => {
             //     //     }
             //     // })
 
-            const lay_baiktra_id = await createQueryBuilder(Diem, 'd')
+            const lay_baiktra_id = await repr2.createQueryBuilder('d')
                 .select('d.hocsinh')
                 .where('d.baiktra = :bktraId', { bktraId })
                 .getMany()
@@ -46,11 +44,10 @@ router.get('/QLTH/layhocsinh/:bktraId', async (req, res) => {
         }
 
     } catch (error) {
+        console.log(error)
         return res.json({
             status: 'err',
             msg: error.message
         })
     }
-})
-
-export { router as layDanhSachHocSinh }
+}

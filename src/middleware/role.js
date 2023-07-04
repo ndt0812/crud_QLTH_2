@@ -1,10 +1,14 @@
 let jwt = require("jsonwebtoken");
-const TaiKhoan = require("../entities/taiKhoan");
+const { TaiKhoan } = require("../entities/taiKhoan");
+var cookieParser = require('cookie-parser');
 
-let checkLogin = (req, res, next) => {
+cookieParser()
+
+const checkLogin = (req, res, next) => {
     try {
         let token = req.cookies.token
         let idTK = jwt.verify(token, 'bimat');
+
         TaiKhoan.findOne({
             where: {
                 id: idTK.id
@@ -12,7 +16,7 @@ let checkLogin = (req, res, next) => {
         })
             .then((data) => {
                 if (data) {
-                    console.log(data)
+                    req.data = data
                     next()
                 } else {
                     return res.json('ko co quyen')
@@ -28,7 +32,7 @@ let checkLogin = (req, res, next) => {
 }
 
 
-let checkStu = async (req, res, next) => {
+const checkStu = async (req, res, next) => {
     let role = req.data.role
     if (role === 'stu' || role === 'tea' || role === 'adm') {
         next()
@@ -37,6 +41,24 @@ let checkStu = async (req, res, next) => {
     }
 }
 
-module.exports = {
-    checkLogin, checkStu
+const checkTea = async (req, res, next) => {
+    let role = req.data.role
+    if (role === 'tea' || role === 'adm') {
+        next()
+    } else {
+        res.json('ko co quyen truy cap')
+    }
 }
+
+const checkAdm = async (req, res, next) => {
+    let role = req.data.role
+    if (role === 'adm') {
+        next()
+    } else {
+        res.json('ko co quyen truy cap')
+    }
+}
+
+
+
+module.exports = { checkLogin, checkStu, checkTea, checkAdm }

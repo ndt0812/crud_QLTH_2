@@ -1,12 +1,10 @@
-import express from "express";
+import { Request, Response } from 'express';
 import Excel from "exceljs";
-import { createQueryBuilder } from "typeorm";
 import path from "path";
 import { MonHoc } from "../../entities/monHoc";
+import { dataSource } from '../../data-source';
 
-const router = express.Router();
-
-router.get('/QLTH/monhoc/export', async (req, res) => {
+export const exportMonHocExcel = async (req: Request, res: Response) => {
     try {
 
         type monhoc = {
@@ -14,7 +12,9 @@ router.get('/QLTH/monhoc/export', async (req, res) => {
             ten: string;
         }
 
-        const monhoc_excel = await createQueryBuilder(MonHoc, 'mn')
+        let repo = dataSource.getRepository(MonHoc)
+
+        const monhoc_excel = await repo.createQueryBuilder('mn')
             .select('mn.id')
             .addSelect('mn.ten')
             .getMany()
@@ -63,6 +63,4 @@ router.get('/QLTH/monhoc/export', async (req, res) => {
             msg: error.message
         })
     }
-})
-
-export { router as exportMonHocExcel }
+}

@@ -1,13 +1,12 @@
-import express from "express";
+import { Request, Response } from 'express';
 import Excel from "exceljs";
-import { createQueryBuilder } from "typeorm";
 import path from "path";
 import { BaiKiemTra } from "../../entities/baiKiemTra";
+import { dataSource } from '../../data-source';
 
 
-const router = express.Router();
 
-router.get('/QLTH/bkt/export', async (req, res) => {
+export const exportBaiKiemTraExcel = async (req: Request, res: Response) => {
     try {
 
         type baikiemtra = {
@@ -15,7 +14,9 @@ router.get('/QLTH/bkt/export', async (req, res) => {
             ten: string;
         }
 
-        const baikiemtra_excel = await createQueryBuilder(BaiKiemTra, 'bkt')
+        let repo = dataSource.getRepository(BaiKiemTra)
+
+        const baikiemtra_excel = await repo.createQueryBuilder('bkt')
             .select('bkt.id')
             .addSelect('bkt.ten')
             .getMany()
@@ -64,6 +65,4 @@ router.get('/QLTH/bkt/export', async (req, res) => {
             msg: error.message
         })
     }
-})
-
-export { router as exportBaiKiemTraExcel }
+}

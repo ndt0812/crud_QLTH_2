@@ -1,13 +1,12 @@
-import express from "express";
+import { Request, Response } from 'express';
 import Excel from "exceljs";
 import { createQueryBuilder } from "typeorm";
 import path from "path";
 import { GiaoVien } from "../../entities/giaoVien";
+import { dataSource } from '../../data-source';
 
 
-const router = express.Router();
-
-router.get('/QLTH/giaovien/export', async (req, res) => {
+export const exportGiaoVienExcel = async (req: Request, res: Response) => {
     try {
 
         type giaovien = {
@@ -16,7 +15,9 @@ router.get('/QLTH/giaovien/export', async (req, res) => {
             ten: string;
         }
 
-        const giaovien_excel = await createQueryBuilder(GiaoVien, 'gv')
+        let repo = dataSource.getRepository(GiaoVien)
+
+        const giaovien_excel = await repo.createQueryBuilder('gv')
             .select('gv.id')
             .addSelect('gv.so_nam_kinh_nghiem')
             .addSelect('gv.ten')
@@ -67,6 +68,4 @@ router.get('/QLTH/giaovien/export', async (req, res) => {
             msg: error.message
         })
     }
-})
-
-export { router as exportGiaoVienExcel }
+}

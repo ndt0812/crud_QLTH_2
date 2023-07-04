@@ -1,4 +1,4 @@
-import { DataSource, createConnection } from "typeorm";
+import { DataSource } from "typeorm";
 import { HocSinh } from "./entities/hocSinh";
 import { GiaoVien } from "./entities/giaoVien";
 import { MonHoc } from "./entities/monHoc";

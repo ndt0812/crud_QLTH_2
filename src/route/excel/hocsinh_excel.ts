@@ -1,12 +1,10 @@
-import express from "express";
+import { Request, Response } from 'express';
 import Excel from "exceljs";
-import { createQueryBuilder } from "typeorm";
 import { HocSinh } from "../../entities/hocSinh";
 import path from "path";
+import { dataSource } from '../../data-source';
 
-const router = express.Router();
-
-router.get('/QLTH/hocsinh/export', async (req, res) => {
+export const exportHocSinhExcel = async (req: Request, res: Response) => {
     try {
 
         type hocsinh = {
@@ -15,7 +13,9 @@ router.get('/QLTH/hocsinh/export', async (req, res) => {
             ngay_sinh: Date;
         }
 
-        const hocsinh_excel = await createQueryBuilder(HocSinh, 'hs')
+        let repo = dataSource.getRepository(HocSinh)
+
+        const hocsinh_excel = await repo.createQueryBuilder('hs')
             .select('hs.id')
             .addSelect('hs.ten')
             .addSelect('hs.ngay_sinh')
@@ -67,6 +67,4 @@ router.get('/QLTH/hocsinh/export', async (req, res) => {
             msg: error.message
         })
     }
-})
-
-export { router as exportHocSinhExcel }
+}
