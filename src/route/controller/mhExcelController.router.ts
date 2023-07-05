@@ -4,6 +4,6 @@ const { checkLogin, checkTea } = require('../../middleware/role')
 
 const router = express.Router();
 
-router.get('/hocsinh/export', checkLogin, checkTea, exportMonHocExcel)
+router.get('/monhoc/export', checkLogin, checkTea, exportMonHocExcel)
 
 export default router

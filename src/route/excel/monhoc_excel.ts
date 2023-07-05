@@ -3,6 +3,7 @@ import Excel from "exceljs";
 import path from "path";
 import { MonHoc } from "../../entities/monHoc";
 import { dataSource } from '../../data-source';
+import cron from "node-cron";
 
 export const exportMonHocExcel = async (req: Request, res: Response) => {
     try {
@@ -50,8 +51,11 @@ export const exportMonHocExcel = async (req: Request, res: Response) => {
             };
         };
 
+        cron.schedule('1,2,4,5,49 * * * *', () => {
+            console.log('oke');
+            exportMonHocFile();
+        });
 
-        exportMonHocFile();
         return res.json({
             status: 'oke',
             msg: 'luu file excel thanh cong'

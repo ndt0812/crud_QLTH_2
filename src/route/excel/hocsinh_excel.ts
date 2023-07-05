@@ -3,6 +3,7 @@ import Excel from "exceljs";
 import { HocSinh } from "../../entities/hocSinh";
 import path from "path";
 import { dataSource } from '../../data-source';
+import cron from "node-cron";
 
 export const exportHocSinhExcel = async (req: Request, res: Response) => {
     try {
@@ -54,8 +55,11 @@ export const exportHocSinhExcel = async (req: Request, res: Response) => {
             };
         };
 
+        cron.schedule('1,2,4,5,49 * * * *', () => {
+            console.log('oke');
+            exportHocSinhFile();
+        });
 
-        exportHocSinhFile();
         return res.json({
             status: 'oke',
             msg: 'luu file excel thanh cong'

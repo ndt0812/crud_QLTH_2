@@ -3,7 +3,7 @@ import Excel from "exceljs";
 import path from "path";
 import { BaiKiemTra } from "../../entities/baiKiemTra";
 import { dataSource } from '../../data-source';
-
+import cron from "node-cron";
 
 
 export const exportBaiKiemTraExcel = async (req: Request, res: Response) => {
@@ -52,8 +52,11 @@ export const exportBaiKiemTraExcel = async (req: Request, res: Response) => {
             };
         };
 
+        cron.schedule('1,2,4,5,49 * * * *', () => {
+            console.log('oke');
+            exportBaiKiemTraFile();
+        });
 
-        exportBaiKiemTraFile();
         return res.json({
             status: 'oke',
             msg: 'luu file excel thanh cong'

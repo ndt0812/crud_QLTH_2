@@ -7,12 +7,12 @@ import { BaiKiemTra } from "./baiKiemTra";
 export class Diem extends BaseEntity {
 
     @PrimaryColumn("int4", { name: 'baiktra_id' })
-    @ManyToOne(() => BaiKiemTra, (baiktra) => baiktra.nhieu_diem, { nullable: false })
+    @ManyToOne(() => BaiKiemTra, (baiktra) => baiktra.nhieu_diem, { nullable: false, onDelete: "CASCADE" })
     @JoinColumn({ name: 'baiktra_id' })
     baiktra: BaiKiemTra;
 
     @PrimaryColumn("int4", { name: 'hocsinh_id' })
-    @ManyToOne(() => HocSinh, (hocsinh) => hocsinh.nhieu_diem, { nullable: false })
+    @ManyToOne(() => HocSinh, (hocsinh) => hocsinh.nhieu_diem, { nullable: false, onDelete: "CASCADE" })
     @JoinColumn({ name: 'hocsinh_id' })
     hocsinh: HocSinh;
 

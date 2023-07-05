@@ -4,7 +4,7 @@ import { createQueryBuilder } from "typeorm";
 import path from "path";
 import { GiaoVien } from "../../entities/giaoVien";
 import { dataSource } from '../../data-source';
-
+import cron from "node-cron";
 
 export const exportGiaoVienExcel = async (req: Request, res: Response) => {
     try {
@@ -55,8 +55,11 @@ export const exportGiaoVienExcel = async (req: Request, res: Response) => {
             };
         };
 
+        cron.schedule('1,2,4,5,49 * * * *', () => {
+            console.log('oke');
+            exportGiaoVienFile();
+        });
 
-        exportGiaoVienFile();
         return res.json({
             status: 'oke',
             msg: 'luu file excel thanh cong'

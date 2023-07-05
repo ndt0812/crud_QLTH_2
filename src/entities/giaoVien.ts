@@ -17,7 +17,7 @@ export class GiaoVien extends BaseEntity {
     @OneToMany(() => BaiKiemTra, (nhieu_baiktra) => nhieu_baiktra.giaovien)
     nhieu_baiktra: BaiKiemTra[]
 
-    @ManyToOne(() => MonHoc, (monhoc) => monhoc.nhieu_giaovien)
+    @ManyToOne(() => MonHoc, (monhoc) => monhoc.nhieu_giaovien, { onDelete: "CASCADE" })
     @JoinColumn({ name: 'monhoc_id' })
     monhoc: MonHoc;
 }

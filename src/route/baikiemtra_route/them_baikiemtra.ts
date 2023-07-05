@@ -1,24 +1,32 @@
-import express, { Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { BaiKiemTra } from '../../entities/baiKiemTra';
+import { validationResult } from "express-validator";
 
 export const themBaiKiemTra = async (req: Request, res: Response) => {
     try {
-        const {
-            ten,
-            giaovien
-        } = req.body;
+        const { ten, giaovien } = req.body;
+        const error = validationResult(req)
 
-        const baikiemtra = BaiKiemTra.create({
-            ten: ten,
-            giaovien: giaovien
-        })
+        if (!error.isEmpty()) {
+            return res.json({
+                status: 'err',
+                err: error.array()
+            })
 
-        await baikiemtra.save();
+        } else {
+            const baikiemtra = BaiKiemTra.create({
+                ten: ten,
+                giaovien: giaovien
+            })
 
-        return res.json({
-            status: 'oke, them bai kiem tra thanh cong',
-            msg: baikiemtra
-        });
+            await baikiemtra.save();
+
+            return res.json({
+                status: 'oke, them bai kiem tra thanh cong',
+                msg: baikiemtra
+            });
+        }
+
     } catch (error) {
         return res.json({
             status: 'err',

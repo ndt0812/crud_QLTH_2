@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { BaiKiemTra } from "../entities/baiKiemTra";
 import { GiaoVien } from "../entities/giaoVien";
 import { dataSource } from '../data-source';
